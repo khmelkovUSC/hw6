@@ -93,5 +93,20 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
 //add your solution here!
+	if (r >= 0 && r < board.size() && c >= 0 && c < board[0].size()) {
+		std::cout << word << ": " << r << " " << c << std::endl;
+		word += board[r][c];
+	} else return false;
 
+	// If word is a prefix or a word
+	if (prefix.find(word) != prefix.end() || dict.find(word) != prefix.end()) {
+		// Try adding one more letter
+		if (!boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc)) {
+			// Check if full word
+			if (dict.find(word) != dict.end()) {
+				result.insert(word);
+				return true;
+			} else return false;
+		} else return false;
+	} else return false;
 }
